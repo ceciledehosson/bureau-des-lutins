@@ -29,3 +29,9 @@ Les fichiers privés `initialisation_privee.sql`, `codes_lutins.txt` et `.stream
 4. Rafraîchir l'application Streamlit ; les modifications de `app.py` ont déjà été publiées sur GitHub.
 
 Un cadeau collectif commence par une réservation normale. Les autres lutins peuvent alors le rejoindre, avec un montant facultatif. La coordination du paiement se fait entre eux. Le destinataire ne voit pas ces participations. L'application conserve son fonctionnement V1 si la migration n'est pas encore exécutée.
+
+## Droits d’auteur
+
+© 2026 Cécile de Hosson — Tous droits réservés.
+
+Le dépôt est accessible publiquement pour consultation, mais aucune licence générale de réutilisation, modification ou redistribution n’est accordée à ce stade.
