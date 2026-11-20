@@ -57,6 +57,8 @@ def action(name, **params):
 
 st.title("🎄 Le Bureau des Lutins")
 st.caption("Des listes, des surprises et zéro cadeau en double !")
+st.caption("📂 Dépôt GitHub : ceciledehosson/bureau-des-lutins")
+st.caption("© 2026 Cécile de Hosson — Tous droits réservés.")
 
 if "code" not in st.session_state:
     with st.form("login"):
