@@ -20,3 +20,12 @@ Les fichiers privés `initialisation_privee.sql`, `codes_lutins.txt` et `.stream
 - Cadeaux communs : coordination manuelle en V1.
 
 ⚠️ Prototype familial : les codes d'accès sont des secrets de connexion. Éviter toute donnée sensible. Avant une utilisation plus large, ajouter une limitation des tentatives de connexion et un mécanisme de renouvellement des codes.
+
+
+## Mise à jour V2 (base existante)
+1. Ouvrir `migration_v2.sql` et exécuter son contenu dans **Supabase → SQL Editor**.
+2. La migration remplace les sept noms fictifs par Cécile, Emmanuelle, Aurélie, Samuel, Shayra, Zakia et Isidore, **sans modifier les codes**.
+3. La même migration ajoute les contributions aux cadeaux collectifs.
+4. Rafraîchir l'application Streamlit ; les modifications de `app.py` ont déjà été publiées sur GitHub.
+
+Un cadeau collectif commence par une réservation normale. Les autres lutins peuvent alors le rejoindre, avec un montant facultatif. La coordination du paiement se fait entre eux. Le destinataire ne voit pas ces participations. L'application conserve son fonctionnement V1 si la migration n'est pas encore exécutée.
