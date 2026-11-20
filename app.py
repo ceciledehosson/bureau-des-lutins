@@ -36,7 +36,7 @@ if "code" not in st.session_state:
         sent = st.form_submit_button("Entrer dans l'atelier 🎅", type="primary")
     if sent:
         try:
-            normalized = code.strip().upper()
+            normalized = code.strip()
             identity = call("lutin_identity", p_code=normalized)
             if identity:
                 st.session_state.code = normalized
