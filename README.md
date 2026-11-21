@@ -35,3 +35,7 @@ Un cadeau collectif commence par une réservation normale. Les autres lutins peu
 © 2026 Cécile de Hosson — Tous droits réservés.
 
 Le dépôt est accessible publiquement pour consultation, mais aucune licence générale de réutilisation, modification ou redistribution n’est accordée à ce stade.
+
+## Plusieurs liens pour un cadeau (novembre 2026)
+
+Dans « Ma lettre », les champs « Liens » acceptent désormais **jusqu'à 5 URL**, une par ligne (1 000 caractères au total). Les liens apparaissent séparément dans « Ma lettre » et « L'atelier ». Les anciens cadeaux avec un seul lien restent compatibles. Aucune migration Supabase n'est nécessaire : le champ texte `url` existant conserve les lignes séparées par des retours à la ligne.
