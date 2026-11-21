@@ -23,6 +23,38 @@ div[data-baseweb="popover"] * {color:#fff!important}
 [data-testid="stExpander"] summary {background:#58625f;color:#fff!important}
 [data-testid="stExpander"] summary * {color:#fff!important}
 [data-testid="stWidgetLabel"] p {color:#253f34!important}
+/* Champs de saisie : texte blanc sur fond sombre, y compris les précisions. */
+[data-testid="stAppViewContainer"] [data-baseweb="input"] > div,
+[data-testid="stAppViewContainer"] [data-baseweb="textarea"] > div,
+[data-testid="stAppViewContainer"] [data-baseweb="select"] > div {
+  background:#384a46!important;
+  color:#fff!important;
+  border-color:#80948b!important;
+}
+[data-testid="stAppViewContainer"] input,
+[data-testid="stAppViewContainer"] textarea,
+[data-testid="stAppViewContainer"] [data-baseweb="select"] input,
+[data-testid="stAppViewContainer"] [data-baseweb="select"] span,
+[data-testid="stAppViewContainer"] [data-baseweb="select"] [role="combobox"] {
+  background:#384a46!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  caret-color:#fff!important;
+}
+[data-testid="stAppViewContainer"] input::placeholder,
+[data-testid="stAppViewContainer"] textarea::placeholder {
+  color:#d0d9d3!important;
+  -webkit-text-fill-color:#d0d9d3!important;
+  opacity:1!important;
+}
+[data-testid="stAppViewContainer"] [data-baseweb="select"] svg {
+  fill:#fff!important;
+}
+div[data-baseweb="popover"] [role="listbox"],
+div[data-baseweb="popover"] [role="option"] {
+  background:#384a46!important;
+  color:#fff!important;
+}
 .stButton button[kind="secondary"] {background:#53655c;color:#fff!important;border-color:#53655c}
 .stButton button[kind="secondary"] * {color:#fff!important}
 .stLinkButton a {background:#53655c;color:#fff!important;border-color:#53655c}
