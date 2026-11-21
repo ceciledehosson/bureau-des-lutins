@@ -37,6 +37,25 @@ def db():
 def call(name, **params):
     return db().rpc(name, params).execute().data
 
+def gift_links(value):
+    """Liste des URL d'un cadeau, une par ligne (compatible avec les anciens liens)."""
+    return [link.strip() for link in (value or "").splitlines() if link.strip()]
+
+
+def valid_gift_links(value):
+    links = gift_links(value)
+    return (len(links) <= 5
+            and len(value or "") <= 1000
+            and all(link.startswith(("https://", "http://"))
+                    and not any(ch.isspace() for ch in link)
+                    for link in links))
+
+
+def show_gift_links(value):
+    for index, link in enumerate(gift_links(value), start=1):
+        st.link_button(f"🔗 Voir le lien {index}", link)
+
+
 def reload_board():
     st.session_state.board = call("lutin_board", p_code=st.session_state.code)
     try:
@@ -109,12 +128,13 @@ with letter:
             details = st.text_area("Quelques précisions", max_chars=1500)
             price = st.number_input("Prix indicatif (€)", min_value=0.0, step=1.0)
             unknown = st.checkbox("Prix inconnu")
-            url = st.text_input("Lien (facultatif)", max_chars=1000)
+            url = st.text_area("Liens (facultatifs, un par ligne)", max_chars=1000,
+                               help="Jusqu'à 5 liens pour un même cadeau, un lien par ligne.")
             priority = st.selectbox("Priorité", priorities)
             submitted = st.form_submit_button("Envoyer au Père Noël 🎅", type="primary")
         if submitted:
-            if not title.strip() or (url and not url.startswith(("https://", "http://"))):
-                st.warning("Indique un cadeau et, s'il y a un lien, commence-le par https://")
+            if not title.strip() or not valid_gift_links(url):
+                st.warning("Indique un cadeau et au maximum 5 liens valides (http:// ou https://), un par ligne.")
             else:
                 action("lutin_save_wish", p_title=title.strip(), p_details=details,
                        p_price=None if unknown else price, p_url=url, p_priority=priority)
@@ -125,8 +145,7 @@ with letter:
         with st.expander(f"🎄 {w['title']} — {w['priority']}"):
             st.write(w["details"] or "Aucune précision")
             st.caption(f"Prix indicatif : {w['price']} €" if w["price"] is not None else "Prix inconnu")
-            if w["url"].startswith(("https://", "http://")):
-                st.link_button("Voir le lien", w["url"])
+            show_gift_links(w["url"])
             st.caption("Impossible de savoir si ce cadeau a été réservé. Surprise ! 🤫")
             with st.form(f"edit_{w['id']}"):
                 t = st.text_input("Nom du cadeau", value=w["title"])
@@ -134,12 +153,13 @@ with letter:
                 p = st.number_input("Prix (€)", min_value=0.0, value=float(w["price"] or 0),
                                     key=f"p_{w['id']}")
                 unk = st.checkbox("Prix inconnu", value=w["price"] is None, key=f"unk_{w['id']}")
-                u = st.text_input("Lien", value=w["url"])
+                u = st.text_area("Liens (un par ligne)", value=w["url"], max_chars=1000,
+                                 help="Jusqu'à 5 liens pour un même cadeau.")
                 pri = st.selectbox("Priorité", priorities, index=priorities.index(w["priority"]))
                 save = st.form_submit_button("Enregistrer")
             if save:
-                if not t.strip() or (u and not u.startswith(("https://", "http://"))):
-                    st.warning("Vérifie le titre et le lien.")
+                if not t.strip() or not valid_gift_links(u):
+                    st.warning("Vérifie le titre et les liens (5 maximum, un par ligne).")
                 else:
                     action("lutin_save_wish", p_id=w["id"], p_title=t.strip(),
                            p_details=d, p_price=None if unk else p, p_url=u, p_priority=pri)
@@ -164,8 +184,7 @@ with workshop:
                 st.write(w["details"] or "")
                 st.caption(f"{w['priority']} · " +
                            (f"environ {w['price']} €" if w["price"] is not None else "prix inconnu"))
-                if w["url"].startswith(("https://", "http://")):
-                    st.link_button("🔗 Voir le cadeau", w["url"])
+                show_gift_links(w["url"])
                 if r is None:
                     if st.button("Je m'en occupe ! 🎅", key=f"reserve_{w['id']}", type="primary"):
                         action("lutin_reserve", p_wish_id=w["id"], p_action="reserve")
